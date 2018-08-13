@@ -1,3 +1,15 @@
 page-home {
+    h3 {
+        text-align: center; // Coloca o titulo "Sistema de Pedidos" no centro      
+    }
 
+    img {
+        // Os comandos abaixo ajustam a imagem "tela-inicia.png"
+        width: 200px;
+        align-self: center;
+        margin: auto;
+        display: block;
+        padding: 10px;
+        // Fim dos comandos 
+    }
 }
