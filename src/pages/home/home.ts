@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 import { IonicPage } from '../../../node_modules/ionic-angular/navigation/ionic-page';
 
 // Esse arquivo eh o controlador da view "home.html" (o que faz isso eh a anotacao @Component)
@@ -10,9 +10,19 @@ import { IonicPage } from '../../../node_modules/ionic-angular/navigation/ionic-
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public menu: MenuController) {
     // Esse navCtrl eh injetado como uma dependencia 
   }
+
+  ionViewWillEnter() {
+    // Nesse metodo, quando estiver na pagina de login, o menu sera desabilitado
+    this.menu.swipeEnable(false);
+    }
+
+    ionViewDidLeave() {
+      // Nesse metodo, quando sair da pagina de login, o menu sera habilitado
+    this.menu.swipeEnable(true);
+    }
 
   login(){
     // Metodo para realizar login
