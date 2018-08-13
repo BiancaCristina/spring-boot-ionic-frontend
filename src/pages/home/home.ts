@@ -11,7 +11,16 @@ import { IonicPage } from '../../../node_modules/ionic-angular/navigation/ionic-
 export class HomePage {
 
   constructor(public navCtrl: NavController) {
+    // Esse navCtrl eh injetado como uma dependencia 
+  }
 
+  login(){
+    // Metodo para realizar login
+
+    // O comando abaixo abre a pagina de categoria
+      // Se eu usasse "push", o comando abriria Categoria e colocaria a setinha para voltar!
+    this.navCtrl.setRoot("CategoriasPage"); // Esse setRoot abre a page de Categorias
+    // Fim do comando
   }
 
 }
