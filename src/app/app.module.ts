@@ -6,6 +6,8 @@ import { MyApp } from './app.component';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import {HttpClientModule} from '@angular/common/http'
+import { CategoriaService } from '../services/domain/categoria.service';
 
 // Esse NgModule eh um "decorator" e eh uma anotacao que vai ter configs para alterar a minha classe
 @NgModule({
@@ -16,6 +18,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   imports: [
     // Em imports temos uma lista de modulos importados por esse modulo
     BrowserModule, 
+    HttpClientModule, // (?) Faz comunicao com o backend
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
@@ -29,7 +32,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     // Ou seja, sempre que eu injetar objetos dos tipos abaixo numa classe desse modulo, estarei usando a mesma instancia
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    CategoriaService // Eu coloco ele no modulo principal para que ele seja instanciado uma vez para toda a aplicacao (porque acredito que ele vai ser necessario em mais de uma pagina)
   ]
 })
 export class AppModule {} // Isso aqui serve para que essa classe seja vista por outras
