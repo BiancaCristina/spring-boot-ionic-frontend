@@ -33,8 +33,6 @@ export class CategoriasPage {
     public categoriaService: CategoriaService ) {
   }
 
-
-
   ionViewDidLoad() {
     // Quando a pagina acabar de ser carregada, o que estiver nesse metodo sera executado
     // Eu preciso usar o "subscribe" porque eh uma chamada assincrona, logo eu preciso me "inscrever" pra fazer alguma coisa quando a resposta chegar
@@ -50,8 +48,12 @@ export class CategoriasPage {
     },
 
     error => {
-      // Caso a requisicao de erro
-      console.log(error); // Imprime a resposta (erro)
+      // Caso a requisicao de erro, deixo que o error-interceptor trate o erro
+      // Se eu quiser fazer algo mais do que apenas imprimir o erro na tela, eu faco aqui!!! (ou seja no controlador)
+
+      // {conteudo alem de apenas imprimir na tela}
+
+      // Mesmo que essa parte esteja vazia, eu coloco para que o erro nao estoure
     });
     
     console.log();
