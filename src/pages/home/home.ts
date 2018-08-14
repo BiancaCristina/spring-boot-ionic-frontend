@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
 import { IonicPage } from '../../../node_modules/ionic-angular/navigation/ionic-page';
 import { CredenciaisDTO } from '../../models/credenciais.dto';
+import { AuthService } from '../../services/auth.service';
 
 // Esse arquivo eh o controlador da view "home.html" (o que faz isso eh a anotacao @Component)
 @IonicPage() // Essa anotacao faz com que eu possa referenciar essa classe usando o nome da classe entre aspas, ex: "HomePage", o que facilita no Lazy Loading
@@ -17,8 +18,11 @@ export class HomePage {
     senha: ""
   };
   
-  constructor(public navCtrl: NavController, public menu: MenuController) {
-    // Esse navCtrl eh injetado como uma dependencia 
+  constructor(
+    public navCtrl: NavController, 
+    public menu: MenuController,
+    public auth: AuthService) {
+    
   }
 
   ionViewWillEnter() {
@@ -34,14 +38,21 @@ export class HomePage {
   login(){
     // Metodo para realizar login
 
-    // Imprime o valor da variavel creds no console
-    console.log(this.creds);
-    // Fim da impressao
+    // O comando abaixo faz a autenticacao do user
+    this.auth.autenthicate(this.creds)
+      .subscribe(response => {
+        console.log(response.headers.get('Authorization'));
 
-    // O comando abaixo abre a pagina de categoria
-      // Se eu usasse "push", o comando abriria Categoria e colocaria a setinha para voltar!
-    this.navCtrl.setRoot("CategoriasPage"); // Esse setRoot abre a page de Categorias
+        // O comando abaixo abre a pagina de categoria
+        // Se eu usasse "push", o comando abriria Categoria e colocaria a setinha para voltar!
+        this.navCtrl.setRoot("CategoriasPage"); // Esse setRoot abre a page de Categorias
+        // Fim do comando
+      },
+    error => {});
     // Fim do comando
+
+
+    
   }
 
 }

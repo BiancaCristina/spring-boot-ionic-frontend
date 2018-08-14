@@ -9,6 +9,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import {HttpClientModule} from '@angular/common/http'
 import { CategoriaService } from '../services/domain/categoria.service';
 import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
+import { AuthService } from '../services/auth.service';
 
 // Esse NgModule eh um "decorator" e eh uma anotacao que vai ter configs para alterar a minha classe
 @NgModule({
@@ -35,7 +36,8 @@ import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CategoriaService, // Eu coloco ele no modulo principal para que ele seja instanciado uma vez para toda a aplicacao (porque acredito que ele vai ser necessario em mais de uma pagina)
-    ErrorInterceptorProvider // Interceptador de erros
+    ErrorInterceptorProvider, // Interceptador de erros
+    AuthService // Autentica o user
   ]
 })
 export class AppModule {} // Isso aqui serve para que essa classe seja vista por outras
