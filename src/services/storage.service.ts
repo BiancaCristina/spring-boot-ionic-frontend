@@ -3,7 +3,7 @@ import { STORAGE_KEYS } from "../config/storage_keys.config";
 import { LocalUser } from "../models/local_user";
 
 @Injectable()
-export class StorageServices {
+export class StorageService {
     getLocalUser(): LocalUser{
         let usr = localStorage.getItem(STORAGE_KEYS.localUser); // Pego o valor do localStorage que possua a chave passada como parametro
 

@@ -22,7 +22,8 @@ export class MyApp {
     // used for an example of ngFor and navigation
     // O comando abaixo define uma lista 
     this.pages = [ 
-      { title: 'Home', component: "HomePage" } // HomePage vem da classe "HomePage" (esta em Home)
+      { title: 'Profile', component: 'ProfilePage' },
+      { title: 'Categorias', component: 'CategoriasPage' }
     ];
 
   }
