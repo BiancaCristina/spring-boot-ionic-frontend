@@ -4,10 +4,16 @@ import { HttpClient } from "../../node_modules/@angular/common/http";
 import { API_CONFIG } from "../config/api.config";
 import { LocalUser } from "../models/local_user";
 import { StorageServices } from "./storage.service";
+import {JwtHelper} from 'angular2-jwt'
 
 
 @Injectable()
 export class AuthService {
+
+    // Essa variavel vai extrair o email do token
+    jwtHelper: JwtHelper = new JwtHelper();
+    // Fim da variavel
+
     constructor (
         public http: HttpClient,
         public storage: StorageServices){
@@ -28,8 +34,10 @@ export class AuthService {
     successfulLogin(authorizationValue: string) {
         // Esse metodo verifica se o login foi bem sucedido
         let tok = authorizationValue.substring(7); // Remove o "Bearer " do token
+        
         let user: LocalUser = {
-            token: tok
+            token: tok,
+            email: this.jwtHelper.decodeToken(tok).sub // Extrai o email a partir do token
         };
 
         this.storage.setLocalUser(user); // Armazena user no localStorage
