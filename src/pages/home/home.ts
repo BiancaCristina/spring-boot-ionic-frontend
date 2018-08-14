@@ -41,7 +41,7 @@ export class HomePage {
     // O comando abaixo faz a autenticacao do user
     this.auth.autenthicate(this.creds)
       .subscribe(response => {
-        console.log(response.headers.get('Authorization'));
+        this.auth.successfulLogin(response.headers.get('Authorization'));
 
         // O comando abaixo abre a pagina de categoria
         // Se eu usasse "push", o comando abriria Categoria e colocaria a setinha para voltar!
