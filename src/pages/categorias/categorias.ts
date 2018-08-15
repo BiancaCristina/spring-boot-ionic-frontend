@@ -55,10 +55,10 @@ export class CategoriasPage {
 
       // Mesmo que essa parte esteja vazia, eu coloco para que o erro nao estoure
     });
-    
-    console.log();
+  }
 
-
+  showProdutos() {
+    this.navCtrl.push("ProdutosPage"); // Temporario
   }
 
 }
