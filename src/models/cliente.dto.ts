@@ -1,3 +1,5 @@
+import { EstadoDTO } from "./estado.dto";
+
 export interface ClienteDTO {
     // Os campos abaixo sao os mesmos do ClienteDTO do backend
     id: string;
@@ -9,6 +11,4 @@ export interface ClienteDTO {
         // Esse "?" indica que essa URL eh opcional
     imageURL?: string; 
     // Fim da variavel
-
-    
 }
