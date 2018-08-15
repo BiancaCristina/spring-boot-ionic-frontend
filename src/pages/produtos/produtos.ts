@@ -56,8 +56,8 @@ export class ProdutosPage {
     // Fim do codigo
   }
   
-  showDetail(){
+  showDetail(produto_id: string){
     // Esse metodo mostra os detalhes de um produto
-    this.navCtrl.push("ProdutoDetailPage");
+    this.navCtrl.push("ProdutoDetailPage", {produto_id: produto_id});
   }
 }
