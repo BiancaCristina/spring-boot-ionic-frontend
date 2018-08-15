@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx'; // IMPORTANTE: IMPORT ATUALIZADO
 import { StorageService } from '../services/storage.service';
+import { AlertController } from '../../node_modules/ionic-angular';
 
 // Essa classe intercepta erros 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-    constructor(public storage: StorageService){
+    constructor(
+        public storage: StorageService,
+        public alertCtrl: AlertController){
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -33,24 +36,78 @@ export class ErrorInterceptor implements HttpInterceptor {
 
             // Tratamento especifico para o erro 403
             switch(errorObj.status){
+                case 401:
+                    this.handle401();
+                break;
+
                 case 403: 
                     this.handle403();
                 break;
+
+                default:
+                    // Caso nao seja erro 401 e nem 403
+                    this.handlerDefaultError(errorObj);
+                break;
             }
             // Fim do tratamento
-            
+
             return Observable.throw(errorObj); // Propaga o erro
         }) as any;
     }
 
     handle403() {
-        // Esse metodo trata o 403
+        // Esse metodo trata o 401: Acesso negado
         // O tratamento eh forcar a limpeza do meu localStorage
         
         // O comando abaixo limpa o localStorage
         this.storage.setLocalUser(null);
         // Fim do comando
 
+    }
+
+    handle401() {
+        // Esse meotodo trata o erro 401: erro de autenticacao
+
+        // O codigo abaixo cria um "alert"
+        let alert = this.alertCtrl.create({
+            title: 'Erro 401: Falha de autenticacao',
+            message: 'Email ou senha incorretos',
+            enableBackdropDismiss: false, // Isso faz com que a unica maneira de sair do alert seja apertando no botao (opcional)
+            
+            // Lista de botoes
+            buttons: [
+                {
+                    text: 'Ok'
+                }
+            ]
+            // Fim da lista de botoes
+        });
+
+        alert.present(); // Apresenta o alert
+
+        // Fim do codigo
+    }
+
+    handlerDefaultError(errorObj) {
+        // Esse meotodo trata os erros defaults
+        // O codigo abaixo cria um "alert"
+        let alert = this.alertCtrl.create({
+            title: 'Erro ' + errorObj.status + ' : ' + errorObj.error,
+            message: errorObj.message,
+            enableBackdropDismiss: false, // Isso faz com que a unica maneira de sair do alert seja apertando no botao (opcional)
+            
+            // Lista de botoes
+            buttons: [
+                {
+                    text: 'Ok'
+                }
+            ]
+            // Fim da lista de botoes
+        });
+
+        alert.present(); // Apresenta o alert
+
+        // Fim do codigo
     }
 }
 
