@@ -72,6 +72,6 @@ export class CartPage {
   checkout() {
     // Esse metodo finaliza o pedido
 
-    this.navCtrl.push("PickAdressPage"); // Redireciona para pagina que escolhe o endereco
+    this.navCtrl.push("PickAddressPage"); // Redireciona para pagina que escolhe o endereco
   }
 }
