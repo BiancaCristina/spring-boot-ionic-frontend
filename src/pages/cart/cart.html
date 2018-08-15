@@ -9,13 +9,34 @@
 
 <ion-content padding>
   <ion-list>
+
     <ion-item *ngFor="let item of items">
       <ion-thumbnail item-start>
         <img [src]="item.produto.imageURL || 'assets/imgs/prod.jpg'">
       </ion-thumbnail>
       <h2>{{item.produto.nome}}</h2>
       <p>{{item.produto.preco | currency}}</p>
-      <p>{{item.quantidade}}</p>
+      <!-- "O remove-circle" eh o botao pra remover do carrinho-->
+      <ion-icon class="nolinebreak" name="remove-circle" color="primary" (click)="decreaseQuantity(item.produto)"></ion-icon>
+      <p class="nolinebreak" >{{item.quantidade}}</p>
+      <!-- O "add-circle" eh o botao para adicionar no carrinho -->
+      <ion-icon name="add-circle" color="primary" (click)="increaseQuantity(item.produto)"></ion-icon>
+      <!-- O comando "item-end" coloca a lixeirinha na direita-->
+      <ion-icon name="trash" item-end color="danger" (click)="removeItem(item.produto)"></ion-icon>
     </ion-item>
-  </ion-list>   
+
+    <ion-item *ngIf = "total() > 0"> <!-- So mostra um preco total se for maior que 0-->
+      <h1>Total</h1>
+      <h1 item-end>{{total()}}</h1> <!-- Isso aqui vai puxar o metodo "total" do controlador e exibi-lo -->
+    </ion-item>
+
+    <ion-item *ngIf = "total() <= 0">
+      <h1>Seu carrinho está vazio</h1>
+    </ion-item>
+  </ion-list>
+
+  <!-- O comando abaixo cria um botao para continuar comprando-->
+  <button ion-button block (click)="goOn()">Continuar comprando</button>
+  <!-- Fim do comando-->
+   
 </ion-content>
