@@ -7,9 +7,12 @@
 
   <ion-content>
     <ion-list>
+      <!-- O comando abaixo cria um botao pra cada item p da minha lista de paginas.
+           Caso esse botao seja pressionado, ele chama o open page chamando o p como argumento-->
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
+      <!-- Fim do comando -->
     </ion-list>
   </ion-content>
 
