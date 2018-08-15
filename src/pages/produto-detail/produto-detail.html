@@ -8,6 +8,13 @@
 </ion-header>
 
 <ion-content padding>
+
+  <!-- O codigo abaixo adiciona um botao flutuante para o carrinho-->
+  <ion-fab top right edge>
+    <button navPush="CartPage" ion-fab mini><ion-icon name="cart"></ion-icon></button>
+  </ion-fab>
+  <!--Fim do codigo-->
+  
   <!-- O "ion-card" eh um componente do Ionic pra detalhar o produto-->
   <ion-card>
     <img [src]="item?.imageURL || 'assets/imgs/prod.jpg'"/>
