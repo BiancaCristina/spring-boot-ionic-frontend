@@ -1,6 +1,7 @@
 import { Injectable } from "../../node_modules/@angular/core";
 import { STORAGE_KEYS } from "../config/storage_keys.config";
 import { LocalUser } from "../models/local_user";
+import { Cart } from "../models/cart";
 
 @Injectable()
 export class StorageService {
@@ -31,6 +32,27 @@ export class StorageService {
             // Caso nao seja nulo
             localStorage.setItem(STORAGE_KEYS.localUser, JSON.stringify(obj));
             // O comando JSON.stringify(obj) converte um JSON em string porque o localStorage armazena como string
+        }
+    }
+
+    getCart() : Cart {
+        // Segue a mesma logica do localUser
+        let str = localStorage.getItem(STORAGE_KEYS.cart);
+        if (str != null) {
+            return JSON.parse(str);
+        }
+        else {
+            return null;
+        }
+    }
+    
+    setCart(obj : Cart) {
+        // Segue a mesma logica do localUser
+        if (obj != null) {
+            localStorage.setItem(STORAGE_KEYS.cart, JSON.stringify(obj));
+        } 
+        else {
+            localStorage.removeItem(STORAGE_KEYS.cart);
         }
     }
 }

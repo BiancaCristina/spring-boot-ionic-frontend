@@ -1,4 +1,5 @@
 // Armazena as chaves dos meus storages
 export const STORAGE_KEYS = {
-    localUser: "localUser"
+    localUser: "localUser",
+    cart: "SpringBootIonicBiancaCart"
 }
