@@ -14,16 +14,8 @@ export class ClienteService {
 
     }
 
-    findByEmail(email: string): Observable<ClienteDTO> {
-
-        // Variveis temporarias para passar o Header de autorizacao na requisicao
-        let token = this.storage.getLocalUser().token;
-        let authHeader = new HttpHeaders({'Authorization': 'Bearer ' + token});
-        // Fim das variaveis temporarias 
-        
-        return this.http.get<ClienteDTO>(
-            `${API_CONFIG.baseURL}/clientes/email?value=${email}`,
-            {'headers': authHeader});
+    findByEmail(email: string): Observable<ClienteDTO> {       
+        return this.http.get<ClienteDTO>(`${API_CONFIG.baseURL}/clientes/email?value=${email}`);
     }
 
     getImageFromBucket(id : string) : Observable<any> {

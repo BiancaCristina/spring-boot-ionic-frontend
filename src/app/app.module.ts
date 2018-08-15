@@ -12,6 +12,7 @@ import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
 import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { ClienteService } from '../services/domain/cliente.service';
+import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
 
 // Esse NgModule eh um "decorator" e eh uma anotacao que vai ter configs para alterar a minha classe
 @NgModule({
@@ -38,6 +39,7 @@ import { ClienteService } from '../services/domain/cliente.service';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CategoriaService, // Eu coloco ele no modulo principal para que ele seja instanciado uma vez para toda a aplicacao (porque acredito que ele vai ser necessario em mais de uma pagina)
+    AuthInterceptorProvider, // Interceptor de authorization (precisa colocar antes do ErrorProvider pra que ele seja executado antes)
     ErrorInterceptorProvider, // Interceptador de erros
     AuthService, // Autentica o user
     StorageService, // Servico de storage (armazenamento)
