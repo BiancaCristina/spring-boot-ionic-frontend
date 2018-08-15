@@ -57,8 +57,10 @@ export class CategoriasPage {
     });
   }
 
-  showProdutos() {
-    this.navCtrl.push("ProdutosPage"); // Temporario
+  showProdutos(categoria_id: string) {
+    // Esse metodo mostra os produtos de cada categoria (apenas os que pertencem à aquela categoria)
+    // O primeiro categoria_id em "categoria_id: categoria_id" poderia ter outro nome. Ex: {cat: categoria_id}, deixei o mesmo pra ficar padronizado
+    this.navCtrl.push("ProdutosPage", {categoria_id: categoria_id});
   }
 
 }

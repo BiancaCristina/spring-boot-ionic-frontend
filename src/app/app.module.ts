@@ -13,6 +13,7 @@ import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { ClienteService } from '../services/domain/cliente.service';
 import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
+import { ProdutoService } from '../services/domain/produto.service';
 
 // Esse NgModule eh um "decorator" e eh uma anotacao que vai ter configs para alterar a minha classe
 @NgModule({
@@ -43,7 +44,8 @@ import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
     ErrorInterceptorProvider, // Interceptador de erros
     AuthService, // Autentica o user
     StorageService, // Servico de storage (armazenamento)
-    ClienteService // Servico de cliente
+    ClienteService, // Servico de cliente
+    ProdutoService // Servico de produto 
   ]
 })
 export class AppModule {} // Isso aqui serve para que essa classe seja vista por outras
