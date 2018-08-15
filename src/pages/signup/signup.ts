@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators} from '../../../node_modules/@angular/forms';
+import { CidadeService } from '../../services/domain/cidade.service';
+import { EstadoService } from '../../services/domain/estado.service';
+import { EstadoDTO } from '../../models/estado.dto';
+import { CidadeDTO } from '../../models/cidade.dto';
 
 @IonicPage()
 @Component({
@@ -13,10 +17,15 @@ export class SignupPage {
   formGroup: FormGroup;
   // Fim da variavel
 
+  estados: EstadoDTO[];
+  cidades: CidadeDTO[];
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public formBuilder: FormBuilder) {
+    public formBuilder: FormBuilder,
+    public cidadeService: CidadeService,
+    public estadoService: EstadoService) {
 
       // O formBuilder eh utilizado para instanciar um objeto do tipo FormGroup
       
@@ -43,6 +52,43 @@ export class SignupPage {
       // Fim do comando
   }
 
+  ionViewDidLoad() {
+    // Esse metodo povoa a colecao "estados"
+
+    this.estadoService.findAll()
+      .subscribe(response => {
+        // O comando abaixo povoa a colecao "estados"
+        this.estados = response;
+        // Fim do comando
+
+        // O comando abaixo pega o primeiro elemento da lista [estados] e coloca na lista estadoID do user no form
+        this.formGroup.controls.estadoId.setValue(this.estados[0].id);
+        // Fim do comando
+
+        this.updateCidades(); // Busca as cidades que correspondem ao estado selecionado
+      },
+      error => {});     
+  }
+
+  updateCidades() {
+    //
+
+    // O comando abaixo pega o ID do estado selecionado no form
+    let estado_id = this.formGroup.value.estadoId;
+    // Fim do comando
+
+    this.cidadeService.findAll(estado_id)
+      .subscribe(response => {
+          // O comando abaixo povoa a colecao "cidades" com as cidades do estado passado como argumento
+          this.cidades = response;
+          // Fim do comando
+
+          // O comando abaixo deseleciona a cidade que estava selecionada como padrao no form
+          this.formGroup.controls.cidadeId.setValue(null);
+          // Fim do comando
+      },
+      error => {});
+  }
   signupUser() {
     console.log("enviou o form");
   }
