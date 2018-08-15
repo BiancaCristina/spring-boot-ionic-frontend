@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators} from '../../../node_modules/@angular/forms';
 import { CidadeService } from '../../services/domain/cidade.service';
 import { EstadoService } from '../../services/domain/estado.service';
 import { EstadoDTO } from '../../models/estado.dto';
 import { CidadeDTO } from '../../models/cidade.dto';
+import { ClienteService } from '../../services/domain/cliente.service';
 
 @IonicPage()
 @Component({
@@ -25,7 +26,9 @@ export class SignupPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public cidadeService: CidadeService,
-    public estadoService: EstadoService) {
+    public estadoService: EstadoService,
+    public clienteService: ClienteService,
+    public alertCtrl: AlertController) {
 
       // O formBuilder eh utilizado para instanciar um objeto do tipo FormGroup
       
@@ -89,7 +92,34 @@ export class SignupPage {
       },
       error => {});
   }
+
   signupUser() {
-    console.log("enviou o form");
+    this.clienteService.insert(this.formGroup.value)
+      .subscribe(response => {
+        this.showInsertOk(); // Mostra mensagem de "Registro bem sucedido"
+      },
+      error => {});
+  }
+
+  showInsertOk(){
+    // Esse metodo mostra um Alert informando que a insercao foi feita com sucesso
+    let alert = this.alertCtrl.create({
+      title: "Sucesso!",
+      message: "Cadastro efetuado com sucesso!",
+      enableBackdropDismiss: false,
+      buttons: [
+        {
+          text: "Ok",
+
+          // O comando abaixo desempilha a pagina "Signup" e volta pra pagina inicial da aplicacao
+          handler: () => {
+            this.navCtrl.pop();
+          }
+          // Fim do comando
+        }
+      ]
+    });
+
+    alert.present(); // Mostra o alert
   }
 }

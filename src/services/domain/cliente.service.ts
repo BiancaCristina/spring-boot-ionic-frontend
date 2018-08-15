@@ -25,4 +25,17 @@ export class ClienteService {
         // Esse "blob" indica que eh uma imagem e nao um JSON
         return this.http.get(url, {responseType : 'blob'});
     }
+
+    insert(obj : ClienteDTO) {
+        // Esse metodo insere um novo cliente
+        
+        return this.http.post(
+            `${API_CONFIG.baseURL}/clientes`, 
+            obj,
+            { 
+                observe: 'response', 
+                responseType: 'text'
+            }
+        ); 
+    }
 }

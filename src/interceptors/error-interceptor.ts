@@ -3,6 +3,7 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS
 import { Observable } from 'rxjs/Rx'; // IMPORTANTE: IMPORT ATUALIZADO
 import { StorageService } from '../services/storage.service';
 import { AlertController } from '../../node_modules/ionic-angular';
+import { FieldMessage } from '../models/fieldmessage';
 
 // Essa classe intercepta erros 
 @Injectable()
@@ -42,6 +43,10 @@ export class ErrorInterceptor implements HttpInterceptor {
 
                 case 403: 
                     this.handle403();
+                break;
+
+                case 422:
+                    this.handle422(errorObj);
                 break;
 
                 default:
@@ -88,6 +93,26 @@ export class ErrorInterceptor implements HttpInterceptor {
         // Fim do codigo
     }
 
+    handle422(errorObj) {
+        // Esse metodo trata o erro 422: erro de validacao
+        let alert = this.alertCtrl.create({
+            title: "Erro 422: Validacao",
+            message: this.listErrors(errorObj.errors),
+            enableBackdropDismiss: false, // Isso faz com que a unica maneira de sair do alert seja apertando no botao (opcional)
+            
+            // Lista de botoes
+            buttons: [
+                {
+                    text: 'Ok'
+                }
+            ]
+            // Fim da lista de botoes
+        });
+
+        alert.present(); // Apresenta o alert
+
+    }
+
     handlerDefaultError(errorObj) {
         // Esse meotodo trata os erros defaults
         // O codigo abaixo cria um "alert"
@@ -109,7 +134,19 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         // Fim do codigo
     }
+
+    private listErrors(messages : FieldMessage[]) : string {
+        // Esse metodo lista os erros, retornando-os em forma de string
+
+        let s : string = ''; // Inicialmente a string eh vazia
+
+        for (var i=0; i<messages.length; i++) {
+            s = s + '<p><strong>' + messages[i].fieldName + "</strong>: " + messages[i].message + '</p>';
+        }
+        return s;
+    }
 }
+
 
 export const ErrorInterceptorProvider = {
     // Esse cons eh uma exigencia do framework pra criar um interceptor
