@@ -1,9 +1,9 @@
 <ion-header>
-    <ion-navbar>
-      <ion-title>Signup</ion-title>
-    </ion-navbar>
+  <ion-navbar>
+    <ion-title>Signup</ion-title>
+  </ion-navbar>
 </ion-header>
-  
+
 <ion-content padding>
   <!-- O comando [formGroup] faz o binding com meu objeto FormGroup do signup.ts-->
   <form [formGroup]="formGroup" (ngSubmit)="signupUser(); $event.preventDefault()">
@@ -12,10 +12,17 @@
       <!-- A tag "formControlName" faz o binding de um atributo do formControll (faz isso pra todos os campos que a possuem)-->
       <ion-input formControlName="nome" type="text"></ion-input>
     </ion-item>
+    <!-- O comando abaixo mostra o erro de validacao do formulario -->
+    <!-- ngIf == "if"-->
+    <!-- Eu testo se o (campo foi "mexido" (dirty), ou seja, usuario passou pelo campo pelo menos uma vez e saiu do campo) && (verifica se algum dos validators do nome estourar)-->
+    <!-- Caso o "if" de TRUE, entao mostro a mensagem "Valor invalido"-->
+    <p class="danger" *ngIf="formGroup.controls.nome.dirty && formGroup.controls.nome.errors" margin-left>Valor inválido</p>
+    <!-- Fim do comando -->
     <ion-item>
       <ion-label stacked>Email*</ion-label>
       <ion-input formControlName="email" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls.email.dirty && formGroup.controls.email.errors" margin-left>Valor inválido</p>
     <ion-list radio-group formControlName="tipo">
       <ion-list-header>
         Tipo de cliente
@@ -34,18 +41,22 @@
       <ion-label stacked>CPF ou CNPJ</ion-label>
       <ion-input formControlName="cpfOuCnpj" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls.cpfOuCnpj.dirty && formGroup.controls.cpfOuCnpj.errors" margin-left>Valor inválido</p>
     <ion-item>
       <ion-label stacked>Senha*</ion-label>
       <ion-input formControlName="senha" type="password"></ion-input>
     </ion-item> 
+    <p class="danger" *ngIf="formGroup.controls.senha.dirty && formGroup.controls.senha.errors" margin-left>Valor inválido</p>
     <ion-item>
       <ion-label stacked>Logradouro*</ion-label>
       <ion-input formControlName="logradouro" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls.logradouro.dirty && formGroup.controls.logradouro.errors" margin-left>Valor inválido</p>
     <ion-item>
       <ion-label stacked>Número*</ion-label>
       <ion-input formControlName="numero" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls.numero.dirty && formGroup.controls.numero.errors" margin-left>Valor inválido</p>
     <ion-item>
       <ion-label stacked>Complemento</ion-label>
       <ion-input formControlName="complemento" type="text"></ion-input>
@@ -58,10 +69,12 @@
       <ion-label stacked>CEP*</ion-label>
       <ion-input formControlName="cep" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls.cep.dirty && formGroup.controls.cep.errors" margin-left>Valor inválido</p>
     <ion-item>
       <ion-label stacked>Telefone 1*</ion-label>
       <ion-input formControlName="telefone1" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls.telefone1.dirty && formGroup.controls.telefone1.errors" margin-left>Valor inválido</p>
     <ion-item>
       <ion-label stacked>Telefone 2</ion-label>
       <ion-input formControlName="telefone2" type="text"></ion-input>
@@ -88,6 +101,8 @@
         <!-- Fim do comando-->
       </ion-select>
     </ion-item>
-    <button ion-button block type="submit">Criar conta</button>
+    <!-- O comando abaixo faz com que o botao de "Registrar" so esteja habilitado caso o formulario esteja preenchido corretamente-->
+    <button ion-button block type="submit" [disabled]="formGroup.invalid">Criar conta</button>
+    <!-- Fim do comando -->
   </form>
 </ion-content>
