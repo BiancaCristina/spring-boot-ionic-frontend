@@ -54,5 +54,10 @@ export class ProdutosPage {
         error => {});
     }
     // Fim do codigo
-  }  
+  }
+  
+  showDetail(){
+    // Esse metodo mostra os detalhes de um produto
+    this.navCtrl.push("ProdutoDetailPage");
+  }
 }
