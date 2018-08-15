@@ -68,4 +68,9 @@ export class HomePage {
     // Fim do comando
   }
 
+  signup() {
+    // Metodo que cadastra o user
+    this.navCtrl.push("SignupPage");
+  }
+
 }
