@@ -24,7 +24,7 @@ export class ProfilePage {
   ionViewDidLoad() {
     let localUser = this.storage.getLocalUser(); // Pega o localUser
 
-    if (localUser && localUser.email){
+    if (localUser && localUser.email) {
       // Se esse localUser nao for nulo e possuir o campo email, entao
       this.clienteService.findByEmail(localUser.email)
         .subscribe(response => {
@@ -35,7 +35,19 @@ export class ProfilePage {
           this.getImageIfExists();
           // Fim do comando
         },
-        error =>{});
+        error =>{
+          if (error.status == 403){
+            // Se o erro for o 403, eu redireciono para a pagina home
+            this.navCtrl.setRoot("HomePage");
+          }
+
+        });
+    }
+
+    else {
+      // Caso de algum problema com o localUser, redireciona para a pagina home
+      this.navCtrl.setRoot("HomePage");
+
     }
   }
 
