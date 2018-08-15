@@ -44,6 +44,17 @@ export class AuthService {
         
     }
 
+    refreshToken (){
+        // Metodo que autentica o user
+
+        return this.http.post(`${API_CONFIG.baseURL}/auth/refresh_token`, 
+        {},
+        {
+            observe: 'response',
+            responseType: 'text'
+        });
+    }
+
     logout() {
         // Esse metodo faz logout do usario
         this.storage.setLocalUser(null); // Remove user do localStorage

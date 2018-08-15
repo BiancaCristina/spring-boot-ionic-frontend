@@ -35,6 +35,22 @@ export class HomePage {
     this.menu.swipeEnable(true);
     }
 
+    ionViewDidEnter() {
+      // Nesse metodo, faco o refreshToken
+      // O comando abaixo faz o refreshToken
+      this.auth.refreshToken()
+        .subscribe(response => {
+        this.auth.successfulLogin(response.headers.get('Authorization'));
+
+        // O comando abaixo abre a pagina de categoria
+        // Se eu usasse "push", o comando abriria Categoria e colocaria a setinha para voltar!
+        // Isso aqui vai fazer com que, caso o token ainda seja valido, continuarei na pagina de categorias
+        this.navCtrl.setRoot("CategoriasPage"); // Esse setRoot abre a page de Categorias
+        // Fim do comando
+    },
+  error => {});
+  // Fim do comando
+    }
   login(){
     // Metodo para realizar login
 
@@ -50,9 +66,6 @@ export class HomePage {
       },
     error => {});
     // Fim do comando
-
-
-    
   }
 
 }
