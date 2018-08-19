@@ -21,6 +21,12 @@ export class ProdutosPage {
   }
 
   ionViewDidLoad() {
+    this.loadData();
+  }
+
+  loadData() {
+    // Esse metodo era o ViewDidLoad
+
     // O codigo abaixo obtem o ID da categoria a partir dos dados da navegacao
     let categoria_id = this.navParams.get("categoria_id");
     // Fim do codigo
@@ -76,6 +82,14 @@ export class ProdutosPage {
 
     loader.present();
     return loader; // Retorno o loading pra que eu possa acessar ele pra fechar quando necessario 
+  }
+
+  doRefresh(refresher) {
+    this.loadData(); // Recarrega os dados
+    setTimeout(() => {
+      // Essa funcao executa alguma coisa depois daquele tempo ali embaixo, no caso "1000ms" (1s)
+      refresher.complete(); // Fecha o refresher depois de 1000ms/1s
+    }, 1000);
   }
 
 }
