@@ -32,7 +32,13 @@ export class PaymentPage {
 
   nextPage() {
     this.pedido.pagamento = this.formGroup.value; // Preenche os dados de pagamento com os dados do form
-    console.log(this.pedido);
+    
+    // O comando abaixo faz o redirecionamento pra proxima pagina referente a finalizacao do pedido e passa o pedido como parametro de navegacao
+    // Nao se usa "push" aqui pra manter a consistencia da API, ou seja,
+    // Se tivesse "push" aqui, haveria um botao de "voltar" e, no caso, eu ja teria confirmado o pedido -> inconsistencia
+    this.navCtrl.setRoot("OrderConfirmationPage", {pedido: this.pedido}); // Redireciona pra pagina de confirmacao de pedido 
+    // Fim do comando
+    
   }
 
 }

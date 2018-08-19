@@ -18,6 +18,10 @@ export class ClienteService {
         return this.http.get<ClienteDTO>(`${API_CONFIG.baseURL}/clientes/email?value=${email}`);
     }
 
+    findById(id: string): Observable<ClienteDTO> {       
+        return this.http.get<ClienteDTO>(`${API_CONFIG.baseURL}/clientes/${id}`);
+    }
+
     getImageFromBucket(id : string) : Observable<any> {
         // Esse metodo busca a imagem do cliente no bucket da Amazon
         let url = `${API_CONFIG.bucketBaseURL}/cp${id}.jpg`
