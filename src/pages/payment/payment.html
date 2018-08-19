@@ -1,0 +1,47 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Forma de pagamento</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <form [formGroup]="formGroup" (ngSubmit)="nextPage(); $event.preventDefault()">
+    <!-- radio-group: faz aquela "bolinha" de escolha pro @type-->
+    <ion-list radio-group formControlName="@type">
+      <ion-list-header>
+        Tipo de pagamento
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Pagamento com cartão</ion-label>
+        <ion-radio checked="true" value="pagamentoComCartao"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Pagamento com boleto</ion-label>
+        <ion-radio value="pagamentoComBoleto"></ion-radio>
+      </ion-item>
+    </ion-list>
+
+    <!-- O codigo abaixo so vai aparecer se for escolhido o pagamentoComCartao -->
+    <ion-item *ngIf="formGroup.value['@type'] == 'pagamentoComCartao'">
+      <ion-label stacked>Parcelas no boleto</ion-label>
+      <ion-select formControlName="numeroDeParcelas">
+        
+        <!-- O comando abaixo percorre a lista de "parcelas" e exibe opcao pro user escolher em quantas parcelas quer dividir-->
+        <ion-option *ngFor="let n of parcelas; first as f" [value]="n" [selected]="f">{{n}}</ion-option>
+        <!-- Fim do comando -->
+
+      </ion-select>
+    </ion-item>
+    <!-- Fim do codigo -->
+
+    <button ion-button block type="submit" [disabled]="formGroup.invalid">Próximo</button>
+  
+  </form>
+
+</ion-content>

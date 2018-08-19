@@ -66,7 +66,10 @@ export class PickAddressPage {
 
   nextPage(item: EnderecoDTO) {
     this.pedido.enderecoDeEntrega = {id: item.id}; // Pega a RefDTO (id do endereco)
-    console.log(this.pedido);
+    
+    // O comando abaixo "empilha" a pagina de Pagamento e envia o pedido como parametro de navegacao
+    this.navCtrl.push("PaymentPage", {pedido: this.pedido});
+    // Fim do comando
   }
 
 }
