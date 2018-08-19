@@ -19,6 +19,7 @@ export class OrderConfirmationPage {
   cartItems: CartItem[]; // Itens do carrinho
   cliente: ClienteDTO; // Cliente
   endereco: EnderecoDTO; // Endereco
+  codpedido: string; // Codigo referente ao pedido 
 
   constructor(
     public navCtrl: NavController, 
@@ -73,9 +74,9 @@ export class OrderConfirmationPage {
     this.pedidoService.insert(this.pedido)
       .subscribe(response => {
         this.cartService.createOrClearCart(); // Limpa o carrinho
-        // Codigo temporario pra mostrar o locaote
-        console.log(response.headers.get("location"));
-        // Fim do codigo
+        // O comando abaixo atribui o codigo do pedido a partir do header location 
+        this.codpedido = this.extractId(response.headers.get("location"));
+        // Fim do comando
       },
       error => {
         if (error.status == 403) {
@@ -90,4 +91,17 @@ export class OrderConfirmationPage {
     this.navCtrl.setRoot("CartPage");
   }
 
+  private extractId (location: string): string {
+    // A variavel abaixo recebe a posicao da ultima barra que antecede o ID do pedido
+    let position = location.lastIndexOf("/");
+    // Fim da variavel
+
+    return location.substring(position + 1, location.length); // Recorta a string e extrai o ID do pedido
+  }
+
+  home() {
+    // Esse metodo redireciona o user para a pagina de categoria
+
+    this.navCtrl.setRoot("CategoriasPage"); // Volta pra pagina de categorias! 
+  }
 }
