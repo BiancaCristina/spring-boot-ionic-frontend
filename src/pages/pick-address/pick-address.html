@@ -12,7 +12,7 @@
         <ion-list-header>
           Selecione um endereço
         </ion-list-header>
-        <button ion-item *ngFor="let item of items">
+        <button ion-item *ngFor="let item of items" (click)="nextPage(item)">
           <!-- Cada item sera um endereco cadastrado do cliente (todos mostrados como opcao)-->
             <h2>{{item.logradouro}}, {{item.numero}}</h2>
             <p>{{item.complemento}} {{item.bairro}} CEP {{item.cep}}</p>
