@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ProdutoDTO } from '../../models/produto.dto';
 import { ProdutoService } from '../../services/domain/produto.service';
 import { API_CONFIG } from '../../config/api.config';
@@ -16,7 +16,8 @@ export class ProdutosPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public produtoService: ProdutoService) {
+    public produtoService: ProdutoService,
+    public loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
@@ -25,17 +26,23 @@ export class ProdutosPage {
     // Fim do codigo
 
     // Esse comando acha os produtos da categoria especifica (por meio do ID)
+    let loader = this.presentLoading(); // Variavel de carregamento da pagina
+
     this.produtoService.findByCategoria(categoria_id)
       .subscribe(response => {
         // O comando abaixo pega apenas o "content" (que eh a lista de produtos) da resposta
         this.items = response["content"]; 
         // Fim do comando
 
+        loader.dismiss(); // Fecha a tela de carregamento
+
         // O comando abaixo carrega as imagens dos produtos
         this.loadImageUrls();
         // Fim do comando
       },
-      error => {});
+      error => {
+        loader.dismiss(); // Fecha a tela de carregamento
+      });
     // Fim do comando
   }
 
@@ -60,4 +67,15 @@ export class ProdutosPage {
     // Esse metodo mostra os detalhes de um produto
     this.navCtrl.push("ProdutoDetailPage", {produto_id: produto_id});
   }
+
+  presentLoading() {
+    // Esse metodo controla o loading da pagina (carregar)
+    let loader = this.loadingCtrl.create({
+      content: "Aguarde..."
+    });
+
+    loader.present();
+    return loader; // Retorno o loading pra que eu possa acessar ele pra fechar quando necessario 
+  }
+
 }
