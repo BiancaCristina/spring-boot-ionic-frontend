@@ -29,6 +29,11 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
+    this.loadData();
+  }
+
+  loadData() {
+    // Esse eh o metodo que era o "IonViewDidLoad"
     let localUser = this.storage.getLocalUser(); // Pega o localUser
 
     if (localUser && localUser.email) {
@@ -93,6 +98,21 @@ export class ProfilePage {
      this.cameraOn = false; // Desliga camera
 
     }, (err) => {});
+  }
+
+  sendPicture() {
+    // Esse metodo envia a imagem tirada da camera
+    this.clienteService.uploadPicture(this.picture)
+      .subscribe(response => {
+        this.picture = null; // Como o envio deu certo, faco essa variavel do controlador ser nula
+        this.loadData(); // Recarrega os dados
+      },
+      error => {} );
+  }
+
+  cancel() {
+    // Esse metodo cancela o envio da imagem 
+    this.picture = null;
   }
 
 }
