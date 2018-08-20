@@ -4,6 +4,7 @@ import { StorageService } from '../../services/storage.service';
 import { ClienteDTO } from '../../models/cliente.dto';
 import { ClienteService } from '../../services/domain/cliente.service';
 import { API_CONFIG } from '../../config/api.config';
+import { Camera, CameraOptions } from '../../../node_modules/@ionic-native/camera';
 
 @IonicPage()
 @Component({
@@ -13,12 +14,18 @@ import { API_CONFIG } from '../../config/api.config';
 export class ProfilePage {
 
   cliente: ClienteDTO;
+  picture: string; // Guarda a foto do user
+
+  // A variavel abaixo controla se o botao de "Tirar Foto" estara habilitado ou nao
+  cameraOn: boolean = false; 
+  // Fim da variavel
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public storage: StorageService,
-    public clienteService: ClienteService) {
+    public clienteService: ClienteService,
+    public camera: Camera) {
   }
 
   ionViewDidLoad() {
@@ -60,6 +67,32 @@ export class ProfilePage {
       this.cliente.imageURL = `${API_CONFIG.bucketBaseURL}/cp${this.cliente.id}.jpg`;
     },
     error => {});
+  }
+
+  getCameraPicture() {
+    // Esse metodo usa a camera do dispositivo para que o user tire foto
+
+    this.cameraOn = true; // Liga camera
+
+    const options: CameraOptions = {
+      quality: 100, // Qualidade maxima
+      destinationType: this.camera.DestinationType.DATA_URL, // Base64 = destination
+      encodingType: this.camera.EncodingType.PNG, // Tipo da imagem
+      mediaType: this.camera.MediaType.PICTURE // Tipo de media    
+    }
+    
+    this.camera.getPicture(options).then((imageData) => {
+     // Then funciona de forma parecida ao "subscribe"
+     // Logo, quando vier a resposta da camera e ela for um sucesso, entao:
+
+     // O comando abaixo pega a imagem e guarda ela em formato base64
+     // Base64 = formato string
+     this.picture = 'data:image/png;base64,' + imageData;
+     // Fim do comando
+
+     this.cameraOn = false; // Desliga camera
+
+    }, (err) => {});
   }
 
 }

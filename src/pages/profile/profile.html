@@ -19,4 +19,19 @@
   <h2 text-center>{{cliente?.nome}}</h2>
   <p text-center>{{cliente?.email}}</p>
   <!-- Fim do codigo -->
+
+  <ion-card>
+    <ion-card-header>
+      Enviar imagem de perfil
+    </ion-card-header>
+    <!-- O codigo abaixo so sera mostrado ao user se o "picture" estiver preenchido -->
+    <ion-item *ngIf="picture"> 
+      <img [src]="picture">
+    </ion-item>
+    <!--Fim do codigo -->
+    <ion-item>
+      <button ion-button block (click)="getCameraPicture()" [disabled]="cameraOn">Camera</button>
+    </ion-item>
+  </ion-card> 
+
 </ion-content>
