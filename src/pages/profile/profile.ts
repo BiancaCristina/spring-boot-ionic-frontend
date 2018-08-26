@@ -100,6 +100,34 @@ export class ProfilePage {
     }, (err) => {});
   }
 
+  getGalleryPicture() {
+
+    this.cameraOn = true; // Liga camera
+
+    const options: CameraOptions = {
+      // O codigo abaixo pega a imagem da galeria
+      quality: 100,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.PNG,
+      mediaType: this.camera.MediaType.PICTURE
+      // Fim do codigo
+    }
+    
+    this.camera.getPicture(options).then((imageData) => {
+    // Then funciona de forma parecida ao "subscribe"
+     // Logo, quando vier a resposta da camera e ela for um sucesso, entao:
+
+     // O comando abaixo pega a imagem e guarda ela em formato base64
+     // Base64 = formato string
+     this.picture = 'data:image/png;base64,' + imageData;
+     // Fim do comando
+     this.cameraOn = false; // Desliga camera
+    }, (err) => {
+    });
+  }
+
+
   sendPicture() {
     // Esse metodo envia a imagem tirada da camera
     this.clienteService.uploadPicture(this.picture)
