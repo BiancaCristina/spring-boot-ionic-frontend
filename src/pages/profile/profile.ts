@@ -97,7 +97,9 @@ export class ProfilePage {
 
      this.cameraOn = false; // Desliga camera
 
-    }, (err) => {});
+    }, (err) => {
+      this.cameraOn = false;
+    });
   }
 
   getGalleryPicture() {
@@ -124,6 +126,7 @@ export class ProfilePage {
      // Fim do comando
      this.cameraOn = false; // Desliga camera
     }, (err) => {
+      this.cameraOn = false;
     });
   }
 
